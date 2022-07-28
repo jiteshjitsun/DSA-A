@@ -1,0 +1,100 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    //  naive soln 
+    // pehle left jao max height lao
+    // right jao max height lao
+    // add karo left+right aur maxi me daal do max
+    // fir left jao 
+    // fir right jao recursively
+    
+    int maxi = 0;
+    
+    int goLeft(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        int l = goLeft(root->left);
+        int r = goRight(root->right);
+        
+        return max(l,r)+1;
+    }
+    
+    int goRight(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        int l = goLeft(root->left);
+        int r = goRight(root->right);
+        
+        return max(l,r)+1;
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(root==NULL) return 0;
+        
+        
+        int le = goLeft(root->left);
+        int re = goRight(root->right);
+        maxi = max(maxi,le+re);
+        
+        diameterOfBinaryTree(root->left);
+        diameterOfBinaryTree(root->right);
+        // maxi = max(maxi,le+re);
+
+        // cout<<le<<" "<<re<<endl;
+        
+        return maxi;
+    }
+};
+
+
+
+// optimal 
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    // optimal  TC - O(n)
+    // pehle left jao right jao 
+    // height return karo aur add karke maxi me daal do 
+    // maxi ko return kara do 
+    
+    int maxi = 0;
+    int dfs(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        
+        int le = dfs(root->left);
+        int re = dfs(root->right);
+                
+        maxi = max(maxi,le+re);
+        cout<<root->val<<"-"<<maxi<<endl;
+        return 1+max(le,re);
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        dfs(root);
+        return maxi;
+    }
+};
