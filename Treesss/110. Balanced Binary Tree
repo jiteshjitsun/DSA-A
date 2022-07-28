@@ -1,0 +1,85 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    
+    // novoice solution 
+    // tc = O(n*n)
+    // simple go to left and right & calculate hight
+    // return true if dis is <=1 else false
+    
+public:
+    
+    int hieghtL(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        int l = hieghtL(root->left);
+        int r = hieghtR(root->right);
+        
+        return 1 + max(l,r);
+    }
+    
+     int hieghtR(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        int l = hieghtL(root->left);
+        int r = hieghtR(root->right);
+        
+        return 1 + max(l,r);
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL) return true;
+        
+        int lef = hieghtL(root->left);
+        int rig = hieghtR(root->right);
+        
+        if(abs(lef-rig) >1) return false;
+        
+        bool l = isBalanced(root->left);
+        bool r = isBalanced(root->right);
+        
+        if(!r or !l) return false;
+        
+        return true;
+    }
+};
+
+
+
+
+// optimal
+
+class Solution {
+public:
+    
+    // optimal soln 
+    // go left and go right calculate height 
+    // if diff is <= 1 return height else return -1;
+    // we will do dfs 
+    // TC = O(n) S.C = O(n)
+    int dfs(TreeNode* root){
+        if(root==NULL) return 0;
+        
+        int le = dfs(root->left);
+        if(le==-1) return -1;
+        int re = dfs(root->right);
+        if(re==-1) return -1;
+        
+        if(abs(le-re)>1) return -1;
+        
+        return 1 + max(le,re);
+    }    
+    
+    bool isBalanced(TreeNode* root) {
+        return dfs(root)!=-1;
+    }
+};
