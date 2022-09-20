@@ -50,8 +50,6 @@ int jaoIndexLekeAao(string str, int si, int ei){
                     return i;
                 }
             }
-            
-
         }
     }
 
