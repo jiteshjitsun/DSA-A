@@ -146,7 +146,48 @@ void pattern10(int row){
 }
 
 void pattern11(int row){
-    
+    char ch = 'E';
+    for(int i=1; i<=row; i++){
+        for(char j=ch; j<ch+i; j++){
+            cout<<j<<" ";
+        }
+        ch--;
+        cout<<endl;
+    }
+}
+
+void pattern12(int row) {
+    for(int i=row; i>0; i-=2){
+        //stars 
+        // cout<<i<<" ";
+        for(int j=0; j<i/2; j++){
+            cout<<"*";
+        }
+        //space
+        for(int j=0; j<row-i; j++){
+            cout<<" ";
+        }
+        //stars
+        for(int j=0; j<i/2; j++){
+            cout<<"*";
+        }
+        cout<<endl;
+    }
+    for(int i=1; i<=row/2; i++){
+        //stars 
+        for(int j=0; j<i; j++){
+            cout<<"*";
+        }
+        //space
+        for(int j=0; j<row-i*2; j++){
+            cout<<" ";
+        }
+        //stars
+        for(int j=0; j<i; j++){
+            cout<<"*";
+        }
+        cout<<endl;
+    }
 }
 
 int main() {
@@ -162,5 +203,6 @@ int main() {
     // pattern8(row);
     // pattern9(row);
     // pattern10(row);
-    pattern11(row);
+    // pattern11(row);
+    pattern12(row);
 }
